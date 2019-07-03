@@ -53,6 +53,7 @@ let connection: MySqlConnectionConfig = {
 let db = Knex({
   client: 'mysql',
   connection: connection,
+  debug: false,
   pool: {
     min: 0,
     max: 100,

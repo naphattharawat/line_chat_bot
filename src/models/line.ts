@@ -2,7 +2,7 @@ import * as Knex from 'knex';
 var request = require("request");
 
 export class Line {
-
+  token = process.env.TOKEN_LINE;
   getMessage(knex: Knex, pattern) {
     return knex('reply')
       .where('pattern', pattern)
@@ -23,7 +23,7 @@ export class Line {
       url: 'https://api.line.me/v2/bot/message/reply',
       headers:
       {
-        'Authorization': 'Bearer 2ntgtCSq4KE1M01kQoFDZy59kUI7jV0Y1W5Us+T2Kmls3tLK/KGoUyynaMj8jWU7/stwJT6ArMyGFFehNoTASnhUj/KxzhGnl/t/X1xjWUNdTKF5CKPJuA/2ibEEhqPVKOlziIxAdCh7fiD8uPsWbQdB04t89/1O/w1cDnyilFU=',
+        'Authorization': `Bearer ${this.token}`,
         'Content-Type': 'application/json'
       },
       body:
@@ -46,7 +46,7 @@ export class Line {
       url: 'https://api.line.me/v2/bot/message/push',
       headers:
       {
-        'Authorization': 'Bearer 2ntgtCSq4KE1M01kQoFDZy59kUI7jV0Y1W5Us+T2Kmls3tLK/KGoUyynaMj8jWU7/stwJT6ArMyGFFehNoTASnhUj/KxzhGnl/t/X1xjWUNdTKF5CKPJuA/2ibEEhqPVKOlziIxAdCh7fiD8uPsWbQdB04t89/1O/w1cDnyilFU=',
+        'Authorization': `Bearer ${this.token}`,
         'Content-Type': 'application/json'
       },
       body:

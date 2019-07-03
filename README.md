@@ -8,8 +8,8 @@ npm i ts-node -g
 ```
 
 ```
-git clone https://github.com/siteslave/ts-node-express myApi
-cd myApi
+git clone https://github.com/naphattharawat/line_chat_bot
+cd line_chat_bot
 npm i
 ```
 

@@ -34,36 +34,37 @@ router.get('/', (req: Request, res: Response) => {
 
 router.post('/webhook', async (req: Request, res: Response) => {
   const db = req.db;
-  let replyToken = req.body.events[0].replyToken
-  const event = req.body.events[0];
-  console.log(req.body);
-  if (event.type == 'follow') {
-    console.log(`follow - ${event.destination}`);
-  } else if (event.type === 'message') {
-    const text = event.message.text;
-    let messages = [];
-    if (event.message.type == 'text') {
-      if (text.substr(0, 3) == 'add') {
-        addMessage(db, text);
-      } else {
-        const rs = await line.getMessage(db, text);
-        if (rs.length) {
-          for (const i of rs) {
-            if (i.reply.substr(0, 4) == "IMG=") {
-              const img = i.reply.substr(4, i.reply.length - 4);
-              messages.push({ type: 'image', originalContentUrl: img, previewImageUrl: img });
-            } else {
-              const _i = i.reply.replace(/#/g, '\r\n');
-              messages.push({ type: 'text', text: _i });
+  if (req.body.events.length) {
+    let replyToken = req.body.events[0].replyToken
+    const event = req.body.events[0];
+    if (event.type == 'follow') {
+      console.log(`follow - ${event.destination}`);
+    } else if (event.type === 'message') {
+      const text = event.message.text;
+      let messages = [];
+      if (event.message.type == 'text') {
+        if (text.substr(0, 3) == 'add') {
+          addMessage(db, text);
+        } else {
+          const rs = await line.getMessage(db, text);
+          if (rs.length) {
+            for (const i of rs) {
+              if (i.reply.substr(0, 4) == "IMG=") {
+                const img = i.reply.substr(4, i.reply.length - 4);
+                messages.push({ type: 'image', originalContentUrl: img, previewImageUrl: img });
+              } else {
+                const _i = i.reply.replace(/#/g, '\r\n');
+                messages.push({ type: 'text', text: _i });
+              }
             }
+
           }
+          if (messages.length) {
+            await line.replyMessage(replyToken, messages)
+          }
+        }
 
-        }
-        if (messages.length) {
-          await line.replyMessage(replyToken, messages)
-        }
       }
-
     }
   }
 

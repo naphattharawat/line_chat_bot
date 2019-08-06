@@ -45,6 +45,13 @@ router.post('/webhook', async (req: Request, res: Response) => {
       if (event.message.type == 'text') {
         if (text.substr(0, 3) == 'add') {
           addMessage(db, text);
+        } else if (text.substr(0, 7) == 'useq4u=') {
+          const hospcode = text.substr(7, text.length - 7);
+          const hc = await line.getHospital(db, hospcode);
+          if (hc.length) {
+            messages.push({ type: 'text', text: `ขอบคุณ ${hc[0].hosname} ที่ใช้ Q4U` });
+            await line.saveQ4U(db, { 'hospcode': hospcode });
+          }
         } else {
           const rs = await line.getMessage(db, text);
           if (rs.length) {
@@ -57,11 +64,11 @@ router.post('/webhook', async (req: Request, res: Response) => {
                 messages.push({ type: 'text', text: _i });
               }
             }
-
+            messages.push({ type: 'text', text: 'รพ.ไหนใช้ Q4U แล้ว รบกวนพิมพ์ \r\n useq4u=41124(hospcode)' });
           }
-          if (messages.length) {
-            await line.replyMessage(replyToken, messages)
-          }
+        }
+        if (messages.length) {
+          await line.replyMessage(replyToken, messages)
         }
 
       }

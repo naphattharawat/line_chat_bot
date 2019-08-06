@@ -13,6 +13,16 @@ export class Line {
       .insert(data);
   }
 
+  saveQ4U(knex: Knex, data) {
+    return knex('use_q4u')
+      .insert(data);
+  }
+
+  getHospital(knex: Knex, hospcode) {
+    return knex('chospital')
+      .where('hoscode', hospcode)
+  }
+
   getMenu(knex: Knex) {
     return knex('menu')
   }

@@ -64,7 +64,7 @@ router.post('/webhook', async (req: Request, res: Response) => {
                 messages.push({ type: 'text', text: _i });
               }
             }
-            messages.push({ type: 'text', text: '##################\r\nรพ.ไหนใช้ Q4U แล้ว รบกวนพิมพ์ \r\nuseQ4U=xxxxx (hospcode) \r\nเพื่อเก็บข้อมูลเสนอผู้บริหาร\r\n##################' });
+            messages.push({ type: 'text', text: '##################\r\nรพ.ไหนใช้ Q4U แล้ว รบกวนพิมพ์ \r\nuseQ4U=xxxxx (hospcode) \r\nเพื่อเก็บข้อมูลเสนอผู้บริหารครับ\r\n##################' });
           }
         }
         if (messages.length) {

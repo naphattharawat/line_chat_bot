@@ -60,11 +60,11 @@ router.post('/webhook', async (req: Request, res: Response) => {
                 const img = i.reply.substr(4, i.reply.length - 4);
                 messages.push({ type: 'image', originalContentUrl: img, previewImageUrl: img });
               } else {
-                const _i = i.reply.replace(/#/g, '\r\n');
+                const _i = i.reply.replace(/##/g, '\r\n');
                 messages.push({ type: 'text', text: _i });
               }
             }
-            messages.push({ type: 'text', text: '##################\r\nรพ.ไหนใช้ Q4U แล้ว รบกวนพิมพ์ \r\nuseQ4U=xxxxx (hospcode) \r\nเพื่อเก็บข้อมูลเสนอผู้บริหารครับ\r\n##################' });
+            messages.push({ type: 'text', text: '################\r\nรพ.ไหนใช้ Q4U แล้ว รบกวนพิมพ์ \r\nuseQ4U=xxxxx (hospcode) \r\nเพื่อเก็บข้อมูลเสนอผู้บริหารครับ\r\n################' });
           }
         }
         if (messages.length) {
